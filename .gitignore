@@ -1,0 +1,17 @@
+# Ignore all previous php and html files from a different project
+change_name.php
+count.php
+disconnect.php
+display_employee.php
+edit_employee.php
+helloworld.html
+.htaccess
+index.php
+Lab2
+ok.php
+userform.html
+visitcount.php
+
+# ignore the config.php so we don't push our passwords
+config.php
+

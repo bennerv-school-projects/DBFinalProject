@@ -1,0 +1,60 @@
+student:
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| s_id     | varchar(20)  | NO   | PRI | NULL    |       |
+| major    | varchar(50)  | NO   |     | NULL    |       |
+| name     | varchar(50)  | NO   |     | NULL    |       |
+| password | varchar(255) | NO   |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+
+exam:
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| exam_name     | varchar(50) | NO   | PRI | NULL    |       |
+| total_points  | int(11)     | NO   |     | NULL    |       |
+| creation_date | date        | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+
+question:
++-------------------+--------------+------+-----+---------+-------+
+| Field             | Type         | Null | Key | Default | Extra |
++-------------------+--------------+------+-----+---------+-------+
+| exam_name         | varchar(50)  | NO   | MUL | NULL    |       |
+| question_number   | int(11)      | NO   | PRI | NULL    |       |
+| answer            | char(1)      | NO   |     | NULL    |       |
+| points            | int(11)      | NO   |     | NULL    |       |
+| question_contents | varchar(256) | NO   |     | NULL    |       |
++-------------------+--------------+------+-----+---------+-------+
+
+choice:
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| id              | char(1)      | NO   |     | NULL    |       |
+| exam_name       | varchar(50)  | NO   | MUL | NULL    |       |
+| question_number | int(11)      | NO   | MUL | NULL    |       |
+| choice_contents | varchar(256) | NO   |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+
+answer:
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| exam_name       | varchar(50) | NO   | MUL | NULL    |       |
+| question_number | int(11)     | NO   | MUL | NULL    |       |
+| s_id            | varchar(20) | NO   | MUL | NULL    |       |
+| choice          | char(1)     | NO   |     | NULL    |       |
+| score           | int(11)     | NO   |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+
+takes:
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| s_id          | varchar(20) | NO   | MUL | NULL    |       |
+| exam_name     | varchar(50) | NO   | MUL | NULL    |       |
+| student_score | int(11)     | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+
