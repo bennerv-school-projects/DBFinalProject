@@ -1,7 +1,7 @@
 <?PHP
-  define('DBHOST', 'classdb.it.mtu.edu');
-  define('DBNAME', 'username');
+  define('DBHOST', 'mysql:host=classdb.it.mtu.edu');
+  define('DBNAME', 'dbname=username');
   define('DBUSER', 'username');
   define('DBPASS', 'password');
 
->
+?>
