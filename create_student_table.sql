@@ -4,4 +4,4 @@ Create Table: CREATE TABLE `student` (
   `name` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`s_id`)
-)
+);
