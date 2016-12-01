@@ -4,4 +4,4 @@
   define('DBUSER', 'username');
   define('DBPASS', 'password');
 
->
+?>
