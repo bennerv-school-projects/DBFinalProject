@@ -1,8 +1,7 @@
 <?php
   try {
     //include config file
-    $dbh = new PDO( 'mysql:host=classdb.it.mtu.edu;dbname=llpeters', "",
-    "cs3425gr");
+    $dbh = new PDO( DBHOST.';'.DBNAME, DBUSER, DBPASS);
     $dbh ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
  
     echo "Welcome";
