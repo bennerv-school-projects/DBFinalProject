@@ -3,4 +3,4 @@ CREATE TABLE `exam` (
   `total_points` int(11) NOT NULL,
   `creation_date` date NOT NULL,
   PRIMARY KEY (`exam_name`)
-)
+);
