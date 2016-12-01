@@ -12,3 +12,6 @@ ok.php
 userform.html
 visitcount.php
 
+# ignore the config.php so we don't push our passwords
+config.php
+
