@@ -1,6 +1,6 @@
 <?php
-  define('dbuser', llpeters);
-  define('dbhost', 'mysql:host=classdb.it.mtu.edu');
-  define('dbname', 'username');
-  define('dbpass', '789456123');
+  define('DBUSER', 'llpeters');
+  define('DBHOST', 'mysql:host=classdb.it.mtu.edu');
+  define('DBNAME', 'dbname=llpeters');
+  define('DBPASS', '789456123');
 ?>
