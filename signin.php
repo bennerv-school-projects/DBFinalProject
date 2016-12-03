@@ -6,7 +6,7 @@
 		header('location: session_test.php');
 	}
 
-	if( isset($_POST['loginButton']) {
+	if( isset($_POST['loginButton'])) {
 		$UserFunctions->login($_POST['username'], $_POST['password']);
 	}
 ?>
