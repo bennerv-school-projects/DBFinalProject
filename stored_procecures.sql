@@ -1,3 +1,6 @@
+# Set the delimiter
+delimiter //
+
 # Create procedure for the exam table to create a new exam
 CREATE PROCEDURE create_exam(
   in exam_name varchar(50), 
@@ -6,7 +9,7 @@ begin
   if CHAR_LENGTH(exam_name) > 0 then 
     insert into exam values(exam_name, total_points, CURRENT_DATE());
   end if;
-end
+end//
 
 # Create procedure for the question table to create a question for an exam
 CREATE PROCEDURE create_question(
@@ -33,4 +36,4 @@ BEGIN
       end if;
     end if;
   end if;
-end
+end//
