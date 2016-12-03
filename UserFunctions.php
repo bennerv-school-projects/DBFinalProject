@@ -24,7 +24,6 @@ class UserFunctions {
 			}
 			return false;
 		} catch(PDOException $e) {
-			echo "FAILED";
 			return false;
 		}
 	}	
@@ -44,15 +43,13 @@ class UserFunctions {
 		
 		# The number of rows returned is not correct
 		if( $numOfRows != 1 ) {
-			echo "Number of rows in login() wrong";
-			die();
+			return array("status" => 0, "message" => "Multiple users with the same id.  Please contact the administrator");
 		}
 		$correctPassword = $statement->fetch();
 		
 		# Wrong password 
 		if( crypt($password, $correctPassword['password']) != $correctPassword['password']) {
-			echo "incorrect password";
-			die();
+			return array("status" => 0, "message" => "Invalid password");
 		}
 		
 		# Set the session id in the sql database to check it's the correct person
@@ -65,10 +62,9 @@ class UserFunctions {
 		# Set the session and user ids in the $_SESSION variable
 		$_SESSION['userid'] = $username;
 		$_SESSION['session'] = md5($username);
+
+		return array("status" => 1, "message" => "Success");
 		
-		echo $_SESSION['userid'];
-		echo "</br>";
-		echo $_SESSION['session'];
 	}
 	
 	
@@ -98,7 +94,7 @@ class UserFunctions {
 		
 		# a user by this name already exists
 		if( $selectStatement->rowCount() != 0 ) {
-			die();
+			return array("status" => 0, "message" => "This student id already exists");
 			
 		}
 		
@@ -112,12 +108,9 @@ class UserFunctions {
 			null
 		]);
 		
-		# Check that it inserted the value correctly
-		if( !$result ) {
-			echo "failed to insert";
-		}
-		
 		$this->login($username, $password);
+
+		return array("status" => 1, "message" => "Success");
 	}
 }
 
