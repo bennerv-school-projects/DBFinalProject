@@ -21,7 +21,7 @@ if(isset($_POST['submitButton']) ) {
 ?>
 
 <html>
-	<link rel="stylesheet" type="test/css" href="front.css">
+	<link rel="stylesheet" type="css" href="front.css">
 	<body>
 		
 		<form action="" method="post">
@@ -31,6 +31,8 @@ if(isset($_POST['submitButton']) ) {
 			Major: <input type="text" name="major"/>
 			<input type="submit" name="submitButton" value="Signup"/>
 		</form>
+
+		<a href="signin.php">Signin</a>
 	</body>
 </html>
 
