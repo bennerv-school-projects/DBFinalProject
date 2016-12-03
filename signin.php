@@ -8,6 +8,7 @@
 
 	if( isset($_POST['loginButton'])) {
 		$UserFunctions->login($_POST['username'], $_POST['password']);
+		exit(header('location: index.php'));
 	}
 ?>
 

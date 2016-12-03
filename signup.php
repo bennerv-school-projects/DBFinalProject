@@ -15,6 +15,7 @@ if( $UserFunctions->loggedIn() ) {
 if(isset($_POST['submitButton']) ) {
 	echo "Signing up";
 	$UserFunctions->signup($_POST['username'], $_POST['major'], $_POST['name'], $_POST['password']);
+	exit(header('location: index.php'));
 }
 
 

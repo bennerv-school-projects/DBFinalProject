@@ -16,3 +16,10 @@
 	}
 
 ?>
+
+
+<html>
+	<body>
+		<a href="signout.php">Signout</a>
+	</body>
+</html>
