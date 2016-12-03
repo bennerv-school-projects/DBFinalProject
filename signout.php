@@ -4,6 +4,6 @@
 	
 	session_destroy();
 	
-	exit(header('location: login.php'));
+	exit(header('location: signin.php'));
 	
 ?>

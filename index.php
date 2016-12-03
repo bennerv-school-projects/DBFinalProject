@@ -1,4 +1,4 @@
 <?php 
-	header( 'location: signup.php' );
+	header( 'location: signin.php' );
 	exit;
 ?>
