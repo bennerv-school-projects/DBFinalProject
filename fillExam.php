@@ -1,6 +1,5 @@
 <?php
   require_once("globalSetup.php");
-
   /*if (!$UserFunctions->loggedIn() )
     header('Location: signing.php');
  */
