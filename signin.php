@@ -3,7 +3,7 @@
 
 
 	if( $UserFunctions->loggedIn()) {
-		header('location: session_test.php');
+		exit(header('location: session_test.php'));
 	}
 
 	if( isset($_POST['loginButton'])) {
