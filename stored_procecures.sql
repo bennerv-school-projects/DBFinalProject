@@ -25,7 +25,7 @@ BEGIN
   declare questionNumber integer;
   
   select COUNT(*) into numOfExams FROM exam where exam.exam_name=exam_name;
-  select COUNT(*) int questionNumber FROM question where question.exam_name=exam_name AND question.question_number=question_number;
+  select COUNT(*) into questionNumber FROM question where question.exam_name=exam_name AND question.question_number=question_number;
   
   if numOfExams == 1 THEN
     if CHAR_LENGTH(answer) == 1 THEN
