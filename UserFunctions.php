@@ -30,13 +30,12 @@ class UserFunctions {
 	}	
 	
 	public function login($username, $password) {
-		
 		$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
 		$username = strtolower($username);
 		
-		$statement = $dbh->prepare('SELECT password FROM student WHERE s_id = ?' );
+		$statement = $dbh->prepare('SELECT password FROM student WHERE s_id = ?');
 		$result = $statement->execute([
 			$username
 		]);
@@ -45,25 +44,31 @@ class UserFunctions {
 		
 		# The number of rows returned is not correct
 		if( $numOfRows != 1 ) {
+			echo "Number of rows in login() wrong";
 			die();
 		}
 		$correctPassword = $statement->fetch();
 		
 		# Wrong password 
-		if( strcmp(crypt($password), $correctPassword) != 0 ) {
+		if( crypt($password, $correctPassword['password']) != $correctPassword['password']) {
+			echo "incorrect password";
 			die();
 		}
 		
 		# Set the session id in the sql database to check it's the correct person
 		$updateStatement = $dbh->prepare('UPDATE student SET session = ? WHERE s_id = ?');
 		$updateStatement->execute([
-			session_id(),
+			md5($username),
 			$username
 		]);
 		
 		# Set the session and user ids in the $_SESSION variable
 		$_SESSION['userid'] = $username;
-		$_SESSION['session'] = session_id();
+		$_SESSION['session'] = md5(username);
+		
+		echo $_SESSION['userid'];
+		echo "</br>";
+		echo $_SESSION['session'];
 	}
 	
 	
@@ -107,9 +112,12 @@ class UserFunctions {
 			null
 		]);
 		
+		# Check that it inserted the value correctly
 		if( !$result ) {
 			echo "failed to insert";
 		}
+		
+		$this->login($username, $password);
 	}
 }
 

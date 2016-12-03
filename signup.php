@@ -1,14 +1,19 @@
 <?php
 
-require_once('UserFunctions.php');
+require_once 'globalSetup.php';
 
-$UserFunctions = new UserFunctions();
+if( isset($_SESSION['userid'])) {
+	echo $_SESSION['userid'];
+	echo "</br>";
+	echo $_SESSION['session'];
+}
 
 if( $UserFunctions->loggedIn() ) {
-	header('Location: session_test.php');
+	exit(header('Location: session_test.php'));
 }
 
 if(isset($_POST['submitButton']) ) {
+	echo "Signing up";
 	$UserFunctions->signup($_POST['username'], $_POST['major'], $_POST['name'], $_POST['password']);
 }
 
