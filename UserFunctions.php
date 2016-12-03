@@ -7,17 +7,11 @@ require_once("config.php");
 # List of public functions for checking if people are logged in etc.
 class UserFunctions {
 	
-	# The reference to the database
-	public $dbh = NULL;
-	
-	function __construct() {
-		$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
-		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		echo "Constructor finished";
-	}
-	
 	public function loggedIn() {
 		try {
+			$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
+			$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			
 			if(!empty($_SESSION)) {
 				$statement = $dbh->prepare('SELECT COUNT(*) FROM student WHERE s_id = ? AND session = ?');
 					
@@ -37,6 +31,9 @@ class UserFunctions {
 	
 	public function login($username, $password) {
 		
+		$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
+		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		
 		$username = strtolower($username);
 		
 		$statement = $dbh->prepare('SELECT password FROM student WHERE s_id = ?' );
@@ -53,7 +50,7 @@ class UserFunctions {
 		$correctPassword = $statement->fetch();
 		
 		# Wrong password 
-		if( !password_verify($password, $correctPassword) ) {
+		if( strcmp(crypt($password), $correctPassword) != 0 ) {
 			die();
 		}
 		
@@ -72,6 +69,9 @@ class UserFunctions {
 	
 	public function removeSession($username, $session) {
 		
+		$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
+		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		
 		$username = strtolower($username);
 		
 		$statement = $dbh->prepare('UPDATE student SET session = null WHERE s_id = ?' );
@@ -81,27 +81,35 @@ class UserFunctions {
 	}
 	
 	public function signup($username, $major, $name, $password) {
+		$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
+		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		
 		$username = strtolower($username);
 		
-		$selectStatement = $dbh->prepare('SELECT COUNT(*) FROM student where s_id = ?');
+		$selectStatement = $dbh->prepare('SELECT * FROM student where s_id = ?');
 		$result = $selectStatement->execute([
 			$username
 		]);
 		
 		# a user by this name already exists
-		if( $selectStatement->rowCount() > 0 ) {
+		if( $selectStatement->rowCount() != 0 ) {
 			die();
 			
 		}
 		
 		# insert the value into the database
-		$insertStatement = $dbh->prepare('INSERT INTO student values(?, ?, ?, ?) ');
+		$insertStatement = $dbh->prepare('INSERT INTO student values(?, ?, ?, ?, ?) ');
 		$result = $insertStatement->execute([
 			$username,
 			$major,
 			$name,
-			password_hash($password, PASSWORD_DEFAULT)
+			crypt($password),
+			null
 		]);
+		
+		if( !$result ) {
+			echo "failed to insert";
+		}
 	}
 }
 
