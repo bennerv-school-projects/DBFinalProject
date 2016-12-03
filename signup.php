@@ -2,20 +2,18 @@
 
 require_once 'globalSetup.php';
 
-if( isset($_SESSION['userid'])) {
-	echo $_SESSION['userid'];
-	echo "</br>";
-	echo $_SESSION['session'];
-}
-
 if( $UserFunctions->loggedIn() ) {
-	exit(header('Location: session_test.php'));
+	exit(header('Location: selectExam.php'));
 }
 
 if(isset($_POST['submitButton']) ) {
-	echo "Signing up";
-	$UserFunctions->signup($_POST['username'], $_POST['major'], $_POST['name'], $_POST['password']);
-	exit(header('location: index.php'));
+	$result = $UserFunctions->signup($_POST['username'], $_POST['major'], $_POST['name'], $_POST['password']);
+	
+	if ($result['status'] == 0 ) {
+		echo $result['message'];
+	} else {
+		exit(header('location: index.php'));
+	}
 }
 
 

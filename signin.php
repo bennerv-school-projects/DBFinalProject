@@ -3,12 +3,16 @@
 
 
 	if( $UserFunctions->loggedIn()) {
-		exit(header('location: session_test.php'));
+		exit(header('location: selectExam.php'));
 	}
 
 	if( isset($_POST['loginButton'])) {
-		$UserFunctions->login($_POST['username'], $_POST['password']);
-		exit(header('location: index.php'));
+		$result = $UserFunctions->login($_POST['username'], $_POST['password']);
+		if( $result['status'] == 0 ) {
+			echo $result['message'];
+		} else {	
+			exit(header('location: index.php'));
+		}
 	}
 ?>
 

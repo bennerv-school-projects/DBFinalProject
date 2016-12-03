@@ -1,9 +1,9 @@
 <?php
 require_once("globalSetup.php");
 echo'<link rel="stylesheet" href="styles.css">';
- /* if ( $UserFunctions->!loggedIn() )
-    header('Location: signin.php');
- */
+  if ( !$UserFunctions->loggedIn() )
+    exit(header('Location: signin.php'));
+ 
   try {
     $dbh = new PDO( DBHOST.';'.DBNAME, DBUSER, DBPASS);
     $dbh ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
