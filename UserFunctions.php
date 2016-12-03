@@ -64,7 +64,7 @@ class UserFunctions {
 		
 		# Set the session and user ids in the $_SESSION variable
 		$_SESSION['userid'] = $username;
-		$_SESSION['session'] = md5(username);
+		$_SESSION['session'] = md5($username);
 		
 		echo $_SESSION['userid'];
 		echo "</br>";

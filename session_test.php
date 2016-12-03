@@ -1,5 +1,9 @@
 <?php
 	require_once 'globalSetup.php';
+	
+	if( !$UserFunctions->loggedIn() ) {
+		exit(header("location: index.php"));
+	}
 
 	if(isset($_SESSION['userid'] )) {
 		echo "HI ".$_SESSION['userid'];
