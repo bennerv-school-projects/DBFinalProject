@@ -1,33 +1,30 @@
 <?php
   require_once("globalSetup.php");
-
-  if ( $UserFunctions->!loggedIn() )
+  /*if (!$UserFunctions->loggedIn() )
     header('Location: signing.php');
- 
+ */
   try {
     //include config file
-    $dbh = new PDO( DBHOST.';'.DBNAME, DBUSER, DBPASS);
-    $dbh ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+   $dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
+   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
- 
-    echo "Welcome";
-    echo $_POST["name"];
-    $qs = dbh->query('select count(*) from Questions where exam=$_Post("exam")');
+    $questionStuff = $dbh->query('select count(*) from question where exam_name='.$_POST["exam"].'');
+    $qs= $questionStuff->fetch();
+    echo $qs[0];
     echo "<hr>";
-    echo '<form action="score.php" method="post">';
-    for($i= 0; $i<qs; $i++)
+    echo '<form action="varDump.php" method="post">';
+    echo '<input type="hidden" name="exam" value='.$_POST["exam"].'>';
+    for($i= 1; $i<=$qs[0]; $i++)
     {
-      $a = 'a';
-      $q_contents = dbh->query('select question_contents from question where exam="'.$_Post("exam").'and question_number="'.$i.'"');
-      echo $q_contents;
-      foreach(dbh->query('select choice_contents from Choice where exam="'.$_Post("exam").'" and question_number="'.$i'"') as $row)
+      $set_contents = $dbh->query('select question_contents from question where exam_name='.$_POST["exam"].' and question_number='.$i.'');
+      $q_contents = $set_contents->fetch();
+      echo $q_contents[0]."</br>";
+      foreach($dbh->query('select id, choice_contents from choice where exam_name='.$_POST["exam"].' and question_number='.$i.' order by id') as $row)
       {
-        dbh->query("select * from Choice c join Question q on c.id=q.id");
-        echo '<input type="radio" name="'.$i.'" value="'.$a.'">';
-        echo '<label for ="'.$i + $a.'">'.$a .+"."+.$row[$0].'"</label><br>"'; 
-        $a++;
+        echo '<input type="radio" name='.$i.' value='.$row[0].'>';
+        echo '<label for ="'.$i.'">'.$row[0] .". ".$row[1].'</label><br>'; 
       }
+      echo "</br>";
     }
      echo'<input type="submit" name="ok" value="Submit">';
    }  
