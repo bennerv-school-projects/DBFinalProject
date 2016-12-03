@@ -16,7 +16,7 @@ CREATE PROCEDURE create_question(
   in exam_name varchar(50),
   in question_number integer,
   in answer char(1),
-  in points integer
+  in points integer,
   in question_contents varchar(256)
 )
 
