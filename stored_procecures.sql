@@ -29,7 +29,7 @@ BEGIN
   
   if numOfExams = 1 THEN
     if CHAR_LENGTH(answer) = 1 THEN
-      if CHAR_LENGTH(question_contents > 0 THEN
+      if CHAR_LENGTH(question_contents) > 0 THEN
         if questionNumber = 0 THEN
           insert into question values( exam_name, question_number, answer, points, question_contents);
         end if;
