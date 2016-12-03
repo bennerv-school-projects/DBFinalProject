@@ -1,8 +1,12 @@
 # Set the delimiter
 delimiter //
 
+DROP PROCEDURE IF EXISTS create_exam;
+DROP PROCEDURE IF EXISTS create_question;
+
+
 # Create procedure for the exam table to create a new exam
-CREATE PROCEDURE IF NOT EXISTS create_exam(
+CREATE PROCEDURE create_exam(
   in exam_name varchar(50), 
   in total_points integer)
 begin 
@@ -12,7 +16,7 @@ begin
 end//
 
 # Create procedure for the question table to create a question for an exam
-CREATE PROCEDURE IF NOT EXISTS create_question(
+CREATE PROCEDURE create_question(
   in exam_name varchar(50),
   in question_number integer,
   in answer char(1),
