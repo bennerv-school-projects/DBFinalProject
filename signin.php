@@ -1,9 +1,14 @@
 <?php
+	require_once 'globalSetup.php';
 
 
+	if( $UserFunctions->loggedIn()) {
+		header('location: session_test.php');
+	}
 
-
-
+	if( isset($_POST['loginButton']) {
+		$UserFunctions->login($_POST['username'], $_POST['password']);
+	}
 ?>
 
 

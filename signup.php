@@ -21,7 +21,7 @@ if(isset($_POST['submitButton']) ) {
 ?>
 
 <html>
-	<link rel="stylesheet" type="css" href="front.css">
+	<link rel="stylesheet" type="test/css" href="front.css">
 	<body>
 		
 		<form action="" method="post">
