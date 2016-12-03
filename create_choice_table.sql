@@ -3,6 +3,5 @@ CREATE TABLE choice (
   exam_name varchar(50) NOT NULL,
   question_number int(11) NOT NULL,
   choice_contents varchar(256) NOT NULL,
-  FOREIGN KEY (exam_name) REFERENCES exam (exam_name),
-  FOREIGN KEY (question_number) REFERENCES question (question_number)
+  FOREIGN KEY (exam_name) REFERENCES exam (exam_name)
 );
