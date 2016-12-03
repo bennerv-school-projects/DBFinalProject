@@ -5,6 +5,5 @@ CREATE TABLE answer (
   choice char(1) NOT NULL,
   score int(11) NOT NULL,
   FOREIGN KEY (exam_name) REFERENCES exam (exam_name),
-  FOREIGN KEY (question_number) REFERENCES question (question_number),
   FOREIGN KEY (s_id) REFERENCES student (s_id)
 );
