@@ -21,6 +21,7 @@ if(isset($_POST['submitButton']) ) {
 ?>
 
 <html>
+	<link rel="stylesheet" type="test/css" href="front.css">
 	<body>
 		
 		<form action="" method="post">
@@ -28,7 +29,7 @@ if(isset($_POST['submitButton']) ) {
 			Student Id: <input type="text" name="username"/> <br/>
 			Password: <input type="password" name="password"/> <br/>
 			Major: <input type="text" name="major"/>
-			<input type="submit" name="submitButton" value="Log In"/>
+			<input type="submit" name="submitButton" value="Signup"/>
 		</form>
 	</body>
 </html>
