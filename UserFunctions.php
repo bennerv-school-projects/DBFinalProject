@@ -1,6 +1,6 @@
 <?php
 # Config for the database sign in
-include_once "config.php";
+require_once("config.php");
 
 #TODO <BMV> CHECK THE $RESULT is true and include error messages in everything if failed instead of die()
 
@@ -8,11 +8,12 @@ include_once "config.php";
 class UserFunctions {
 	
 	# The reference to the database
-	$dbh = NULL;
+	public $dbh = NULL;
 	
 	function __construct() {
-		$dbh = new PDO(DBUSER.';'.DBNAME, DBUSER, DBPASS);
+		$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		echo "Constructor finished";
 	}
 	
 	public function loggedIn() {
@@ -22,12 +23,14 @@ class UserFunctions {
 					
 				$result = $statement->execute([
 					$_SESSION['userid'],
-					$_SESSION['session'}]
+					$_SESSION['session']
 				]);
 					
 				return ($statement->rowCount() == 1);
 			}
+			return false;
 		} catch(PDOException $e) {
+			echo "FAILED";
 			return false;
 		}
 	}	
