@@ -54,7 +54,7 @@ CREATE PROCEDURE create_choice(
 BEGIN
   declare numberOfExams integer;
   declare questionNumber integer;
-  delcare idNumber integer;
+  declare idNumber integer;
   
   select COUNT(*) into numberOfExams FROM exam WHERE exam.exam_name=exam_name;
   select COUNT(*) into questionNumber FROM question WHERE question.exam_name=exam_name AND question.question_number=question_number;
