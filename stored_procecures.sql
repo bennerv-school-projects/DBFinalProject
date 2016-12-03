@@ -27,10 +27,10 @@ BEGIN
   select COUNT(*) into numOfExams FROM exam where exam.exam_name=exam_name;
   select COUNT(*) into questionNumber FROM question where question.exam_name=exam_name AND question.question_number=question_number;
   
-  if numOfExams == 1 THEN
-    if CHAR_LENGTH(answer) == 1 THEN
+  if numOfExams = 1 THEN
+    if CHAR_LENGTH(answer) = 1 THEN
       if CHAR_LENGTH(question_contents > 0 THEN
-        if questionNumber == 0 THEN
+        if questionNumber = 0 THEN
           insert into question values( exam_name, question_number, answer, points, question_contents);
         end if;
       end if;
