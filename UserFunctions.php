@@ -2,8 +2,6 @@
 # Config for the database sign in
 require_once("config.php");
 
-#TODO <BMV> CHECK THE $RESULT is true and include error messages in everything if failed instead of die()
-
 # List of public functions for checking if people are logged in etc.
 class UserFunctions {
 	
@@ -40,6 +38,11 @@ class UserFunctions {
 		]);
 		
 		$numOfRows = $statement->rowCount();
+		
+		
+		if( $numOfRows == 0) {
+			return array("status" => 0, "message" => "Invalid student id");
+		}
 		
 		# The number of rows returned is not correct
 		if( $numOfRows != 1 ) {
@@ -86,6 +89,22 @@ class UserFunctions {
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
 		$username = strtolower($username);
+		
+		if( strlen($username) < 4 ) {
+			return array("status" => 0, "message" => "Usernames must be at least 4 characters");
+		}
+		
+		if( strlen($major) == 0) {
+			return array("status" => 0, "message" => "You must enter a major");
+		}
+		
+		if( strlen($name) == 0) {
+			return array("status" => 0, "message" => "You must enter a name");
+		}
+		
+		if( strlen($password) < 4) {
+			return array("status" => 0, "message" => "Passwords must be at least 4 characters");
+		}
 		
 		$selectStatement = $dbh->prepare('SELECT * FROM student where s_id = ?');
 		$result = $selectStatement->execute([

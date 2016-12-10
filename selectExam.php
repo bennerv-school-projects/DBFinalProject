@@ -28,3 +28,10 @@ catch(PDOException $e) {
 }
 
 ?>
+
+<html>
+	<body>
+		<br/>
+		<a href="signout.php">Sign out</a>
+	</body>
+</html>

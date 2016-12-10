@@ -10,7 +10,7 @@ if(isset($_POST['submitButton']) ) {
 	$result = $UserFunctions->signup($_POST['username'], $_POST['major'], $_POST['name'], $_POST['password']);
 	
 	if ($result['status'] == 0 ) {
-		echo $result['message'];
+		echo '<b>'.$result['message'].'</b>';
 	} else {
 		exit(header('location: index.php'));
 	}
@@ -31,7 +31,7 @@ if(isset($_POST['submitButton']) ) {
 			<input type="submit" name="submitButton" value="Signup"/>
 		</form>
 
-		<a href="signin.php">Signin</a>
+		<a href="signin.php">Sign in</a>
 	</body>
 </html>
 

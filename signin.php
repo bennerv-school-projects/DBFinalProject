@@ -9,7 +9,7 @@
 	if( isset($_POST['loginButton'])) {
 		$result = $UserFunctions->login($_POST['username'], $_POST['password']);
 		if( $result['status'] == 0 ) {
-			echo $result['message'];
+			echo '<b>'.$result['message'].'</b>';
 		} else {	
 			exit(header('location: index.php'));
 		}

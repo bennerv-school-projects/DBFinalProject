@@ -51,7 +51,13 @@
 	{
 		print"Error".$e->getMessage()."<br>";
 		die();
-	}     
-      
+	}     	
 ?>
+
+<html>
+	<body>
+		<br/>
+		<a href="signout.php">Sign out</a>
+	</body>
+</html>
 
