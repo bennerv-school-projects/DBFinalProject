@@ -31,8 +31,8 @@ try {
 	echo '<form action="" method="post">';
 	echo 'Exam: <select name="exam">';
 	
-	// Print out all the selectable exams
-	$statement = $dbh->prepare("SELECT exam_name FROM exam");
+	// Print out all the selectable exams where there is at least one question
+	$statement = $dbh->prepare(" select exam_name from exam where (select COUNT(*) from question where exam.exam_name=question.exam_name) > 0");
 	$statement->execute();
 	$contents = $statement->fetchAll();
 	

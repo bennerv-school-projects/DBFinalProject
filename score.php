@@ -14,9 +14,10 @@ if( !isset($_POST['exam'])) {
 	header('Location: selectExam.php');
 }
 
-$questionsStatement = $dbh->prepare('select count(*) from question');
-$questionsStatement->execute();
+$questionsStatement = $dbh->prepare('select count(*) from question where exam_name =?');
+$questionsStatement->execute([$_POST['exam']]);
 $numberOfQuestions = $questionsStatement->rowCount();
+
 
 // Go through each of the questions and responses
 for ($i = 1; $i <= $numberOfQuestions; $i++) {

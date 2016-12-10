@@ -29,12 +29,12 @@ BEGIN
   declare questionNumber integer;
   
   select COUNT(*) into numOfExams FROM exam where exam.exam_name=exam_name;
-  select 1 + COUNT(question_number) into questionNumber FROM question where question.exam_name=exam_name;
+  select (1 + COUNT(question_number)) into questionNumber FROM question where question.exam_name=exam_name;
   
   if numOfExams = 1 THEN
     if CHAR_LENGTH(answer) = 1 THEN
       if CHAR_LENGTH(question_contents) > 0 THEN
-        insert into question values( exam_name, question_number, answer, points, question_contents);
+        insert into question values( exam_name, questionNumber, answer, points, question_contents);
       end if;
     end if;
   end if;

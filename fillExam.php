@@ -17,11 +17,12 @@
 			$_POST['exam']
 		]);
 		
-		$numberOfQuestions = $questionStatement->rowCount();
+		$numberOfQuestions = $questionStatement->fetch();
+		$numberOfQuestions = $numberOfQuestions['count(*)'];
 		echo "<hr>";
 		echo '<form action="score.php" method="post">';
 		echo '<input type="hidden" name="exam" value='.$_POST["exam"].'>';
-		for($i= 1; $i<=$numberOfQuestions; $i++)
+		for($i= 1; $i <= $numberOfQuestions; $i++)
 		{				
 			# Print out the question contents and teh question number
 			$set_contents = $dbh->prepare('select question_contents from question where exam_name=? and question_number=?');
