@@ -8,12 +8,35 @@ if (!$UserFunctions->loggedIn()) {
 	header('Location: signin.php');
 }
 
+// Make sure the student cannot take an exam more than once
+if( isset($_POST['exam'])) {
+	$dbh = new PDO(DBHOST . ';' . DBNAME, DBUSER, DBPASS);
+	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	
+	$statement = $dbh->prepare("SELECT * FROM takes WHERE s_id=? AND exam_name=?");
+	$statement->execute([$_SESSION['userid'], $_POST['exam']]);
+	
+	if( $statement->rowCount() != 0 ) { 
+		$result = $statement->fetch();
+		echo '<b> You have already taken this exam and got ' . $result['student_score'] . ' points.</b>';
+	} else {
+		$_SESSION['exam'] = $_POST['exam'];
+		header('location: fillExam.php');
+	}
+}
+
 try {
 	$dbh = new PDO(DBHOST . ';' . DBNAME, DBUSER, DBPASS);
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	echo '<form action="fillExam.php" method="post">';
+	echo '<form action="" method="post">';
 	echo 'Exam: <select name="exam">';
-	foreach($dbh->query("select exam_name from exam") as $row) {
+	
+	// Print out all the selectable exams
+	$statement = $dbh->prepare("SELECT exam_name FROM exam");
+	$statement->execute();
+	$contents = $statement->fetchAll();
+	
+	foreach( $contents as $row ) {
 		echo '<option>' . $row[0] . '</option>';
 	}
 

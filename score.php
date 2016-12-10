@@ -1,6 +1,6 @@
 
 <?php
-require_once ("globalSettup.php");
+require_once ("globalSetup.php");
 
 $dbh = new PDO(DBHOST . ';' . DBNAME, DBUSER, DBPASS);
 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -10,33 +10,42 @@ if (!$UserFunctions->loggedIn()) {
 	header('Location: signin.php');
 }
 
-$questionsStatement = dbh->prepare('select count(*) from question');
+if( !isset($_POST['exam'])) {
+	header('Location: selectExam.php');
+}
+
+$questionsStatement = $dbh->prepare('select count(*) from question');
 $questionsStatement->execute();
 $numberOfQuestions = $questionsStatement->rowCount();
 
 // Go through each of the questions and responses
-for ($i = 0; $i < $numberOfQuestions; $i++) {
-	$selectStatement = dbh->prepare('select answer, points from question where exam_name=? and question_number=?');
-	$result = dbh->execute([$_POST['exam'], $i]);
-	$result = $result->fetch();
+for ($i = 1; $i <= $numberOfQuestions; $i++) {
+	$selectStatement = $dbh->prepare('select answer, points from question where exam_name=? and question_number=?');
+	$result = $selectStatement->execute([$_POST['exam'], $i]);
+	$result = $selectStatement->fetch();
 	$correctAnswer = $result['answer'];
-	$insertStatement = dbh->prepare("insert into answer values(?, ?, ?, ?, ?");
+	$insertStatement = $dbh->prepare("insert into answer values(?, ?, ?, ?, ?)");
 
+	// If they didn't answer the question set the value for them
+	if( !isset($_POST[$i]) ) {
+		$_POST[$i] = "";
+	}
+	
 	// Give them the correct number of points
-	if ($_POST[(string)$i] == $correctAnswer) {
-		$result = dbh->execute([$_POST['exam'], $i, $_SESSION['userid'], '?', $result['points']]);
+	if ($_POST[$i] == $correctAnswer) {
+		$result = $insertStatement->execute([$_POST['exam'], $i, $_SESSION['userid'], $_POST[$i], $result['points']]);
 	}
 	else {
-		$result = dbh->execute([$_POST['exam'], $i, $_SESSION['userid'], '?', 0]);
+		$result = $insertStatement->execute([$_POST['exam'], $i, $_SESSION['userid'], $_POST[$i], 0]);
 	}
 }
 
-$totalScoreStatement = dbh->prepare("SELECT SUM(points) FROM answer WHERE exam_name=?");
-$result = $totalScoreStatement->execute([$_POST['exam']]);
-$result->fetch();
-$insertStatement = dbh->prepare("insert into takes values(?, ?, ?)");
-$insertStatement->execute([$_SESSION['userid'], $_POST['exam'], $result['SUM(points)']]);
-echo 'Your score was: ' . $result['SUM(points)'];
+$totalScoreStatement = $dbh->prepare("SELECT SUM(score) FROM answer WHERE exam_name=? AND s_id=?");
+$totalScoreStatement->execute([$_POST['exam'], $_SESSION['userid']]);
+$result = $totalScoreStatement->fetch();
+$insertStatement = $dbh->prepare("insert into takes values(?, ?, ?)");
+$insertStatement->execute([$_SESSION['userid'], $_POST['exam'], $result['SUM(score)']]);
+echo 'Your score was: ' . $result['SUM(score)'];
 
 ?>
 

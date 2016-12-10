@@ -2,9 +2,11 @@
   require_once("globalSetup.php");
 	
 	# Make sure the user is logged in
-	if (!$UserFunctions->loggedIn() or !isset($_POST['exam'])) {
+	
+	if (!$UserFunctions->loggedIn() or !isset($_SESSION['exam'])) {
 		header('Location: signin.php');
 	}
+	$_POST['exam'] = $_SESSION['exam'];
 	
 	try {
 		$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
@@ -17,7 +19,7 @@
 		
 		$numberOfQuestions = $questionStatement->rowCount();
 		echo "<hr>";
-		echo '<form action="varDump.php" method="post">';
+		echo '<form action="score.php" method="post">';
 		echo '<input type="hidden" name="exam" value='.$_POST["exam"].'>';
 		for($i= 1; $i<=$numberOfQuestions; $i++)
 		{				
