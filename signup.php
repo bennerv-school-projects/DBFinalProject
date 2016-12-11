@@ -1,6 +1,7 @@
 <?php
 
 require_once 'globalSetup.php';
+echo '<link rel="stylesheet" href="front.css">';
 
 if( $UserFunctions->loggedIn() ) {
 	exit(header('Location: selectExam.php'));

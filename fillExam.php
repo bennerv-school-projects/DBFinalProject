@@ -1,6 +1,6 @@
 <?php
   require_once("globalSetup.php");
-	
+  echo '<link rel="stylesheet" href="exam.css">';
 	# Make sure the user is logged in
 	
 	if (!$UserFunctions->loggedIn() or !isset($_SESSION['exam'])) {
@@ -49,6 +49,7 @@
 			echo "</br>";
 		}
 			echo'<input type="submit" name="ok" value="Submit">';
+			echo "</br>";
 	}  
 	catch (PDOException $e) 
 	{
