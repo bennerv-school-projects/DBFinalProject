@@ -1,0 +1,27 @@
+body{
+    background-color:#D4DCFF;
+}
+div {
+  background-color:#FCF6EA;
+  width: 50%;
+//   height: 80%;
+  margin-top: 5%;
+  margin-left: 25%;
+  margin-bottom: %10;
+  padding-top: 50px;
+	padding-bottom: 50px; 
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; 
+  font: 15px arial, sans-serif;
+	text-align: center;
+}
+
+a {
+	color: #7D83FF;
+  padding: 3px 5px 5px 5px;
+  text-align: center; 
+  display: inline-block;
+	font-style: bold;
+	font: 15px arial, sans-serif;
+}

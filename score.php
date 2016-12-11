@@ -1,6 +1,7 @@
 
 <?php
 require_once ("globalSetup.php");
+echo '<link rel="stylesheet" href="score.css">';
 
 $dbh = new PDO(DBHOST . ';' . DBNAME, DBUSER, DBPASS);
 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -14,6 +15,11 @@ if( !isset($_POST['exam'])) {
 	header('Location: selectExam.php');
 }
 
+$initialCheck = $dbh->prepare('select count(*) from takes where exam_name =? and s_id=?');
+$initialCheck->execute([$_POST['exam'], $_SESSION['userid']]);
+$hasTaken = $initialCheck->fetch();
+if ($hasTaken[0] != 0){}  //if user refreshes page
+else{
 $questionsStatement = $dbh->prepare('select count(*) from question where exam_name =?');
 $questionsStatement->execute([$_POST['exam']]);
 $numberOfQuestions = $questionsStatement->rowCount();
@@ -40,14 +46,16 @@ for ($i = 1; $i <= $numberOfQuestions; $i++) {
 		$result = $insertStatement->execute([$_POST['exam'], $i, $_SESSION['userid'], $_POST[$i], 0]);
 	}
 }
-
+}
 $totalScoreStatement = $dbh->prepare("SELECT SUM(score) FROM answer WHERE exam_name=? AND s_id=?");
 $totalScoreStatement->execute([$_POST['exam'], $_SESSION['userid']]);
 $result = $totalScoreStatement->fetch();
 $insertStatement = $dbh->prepare("insert into takes values(?, ?, ?)");
 $insertStatement->execute([$_SESSION['userid'], $_POST['exam'], $result['SUM(score)']]);
-echo 'Your score was: ' . $result['SUM(score)'];
 
+echo "<div>";
+echo 'Your score was: ' . $result['SUM(score)'];
+echo "</div>";
 ?>
 
 
