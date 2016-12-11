@@ -5,6 +5,7 @@ require_once("config.php");
 # List of public functions for checking if people are logged in etc.
 class UserFunctions {
 	
+	# Checks if a user is already logged in and returns either true or false if they are based on the session 
 	public function loggedIn() {
 		try {
 			$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
@@ -26,6 +27,7 @@ class UserFunctions {
 		}
 	}	
 	
+	# Logs in a user with the specified username and password, or returns 0 and an error message if unsuccessful 
 	public function login($username, $password) {
 		$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -39,7 +41,7 @@ class UserFunctions {
 		
 		$numOfRows = $statement->rowCount();
 		
-		
+		// No user exists by this student id
 		if( $numOfRows == 0) {
 			return array("status" => 0, "message" => "Invalid student id");
 		}
@@ -66,42 +68,34 @@ class UserFunctions {
 		$_SESSION['userid'] = $username;
 		$_SESSION['session'] = md5($username);
 
+		// Successful login
 		return array("status" => 1, "message" => "Success");
 		
 	}
 	
-	
-	public function removeSession($username, $session) {
-		
-		$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
-		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		
-		$username = strtolower($username);
-		
-		$statement = $dbh->prepare('UPDATE student SET session = null WHERE s_id = ?' );
-		$result = $statement->execute([
-			$username
-		]);
-	}
-	
+	# Creates a new user with an associated name, username, major and password.  If unsuccessful returns 0 and an error message, else logs them in.	
 	public function signup($username, $major, $name, $password) {
 		$dbh = new PDO(DBHOST.';'.DBNAME, DBUSER, DBPASS);
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
 		$username = strtolower($username);
 		
+		// Username must be at least 4 characters check
 		if( strlen($username) < 4 ) {
 			return array("status" => 0, "message" => "Usernames must be at least 4 characters");
 		}
 		
+		// Check if they entered a major
 		if( strlen($major) == 0) {
 			return array("status" => 0, "message" => "You must enter a major");
 		}
 		
+		// Check if they entered a name
 		if( strlen($name) == 0) {
 			return array("status" => 0, "message" => "You must enter a name");
 		}
 		
+		// Password must be at least 4 characters
 		if( strlen($password) < 4) {
 			return array("status" => 0, "message" => "Passwords must be at least 4 characters");
 		}

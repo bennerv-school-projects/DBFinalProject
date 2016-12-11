@@ -2,12 +2,17 @@
 	require_once 'globalSetup.php';
 	echo '<link rel="stylesheet" href="front.css">';
 
+
+	// Check if a user is logged in already and redirect them to the select exam page
 	if( $UserFunctions->loggedIn()) {
 		exit(header('location: selectExam.php'));
 	}
-
+	
+	// If the user pressed the login button, try to log them in
 	if( isset($_POST['loginButton'])) {
 		$result = $UserFunctions->login($_POST['username'], $_POST['password']);
+
+		// Check the status of the login and print out an error message if they failed to login
 		if( $result['status'] == 0 ) {
 			echo '<b>'.$result['message'].'</b>';
 		} else {	
