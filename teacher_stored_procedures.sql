@@ -55,15 +55,12 @@ BEGIN
   
   select COUNT(*) into numberOfExams FROM exam WHERE exam.exam_name=exam_name;
   select COUNT(*) into questionNumber FROM question WHERE question.exam_name=exam_name AND question.question_number=question_number;
-  select COUNT(*) into idNumber FROM choice WHERE choice.id=id;
   
   if numberOfExams = 1 THEN
     if questionNumber = 1 THEN 
       if CHAR_LENGTH(choice_contents) > 0 THEN
         if CHAR_LENGTH(id) > 0 THEN
-          if idNumber = 0 THEN
-            insert into choice values(id, exam_name, question_number, choice_contents);
-          end if;
+          insert into choice values(id, exam_name, question_number, choice_contents);
         end if;
       end if;
     end if;
